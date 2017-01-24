@@ -1,5 +1,5 @@
-from flask.ext.wtf import Form
-from wtforms import StringField, SubmitField, PasswordField, BooleanField
+from flask_wtf import Form
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, SelectField
 from wtforms.validators import Required
 
 class SigninForm(Form):
@@ -14,4 +14,9 @@ class RegisterForm(Form):
 	email = StringField('Email:', validators=[Required()])
 	password = PasswordField('Password:', validators=[Required()])
 	confirm_password = PasswordField('Confirm Password:', validators=[Required()])
-	signin = SubmitField('Register')
+	register = SubmitField('Register')
+
+class RegisterFacilityForm(Form):
+	name = StringField('Name:', validators=[Required()])
+	status = SelectField('Status:', choices=[('Inactive', 'Inactive'), ('Active', 'Active')], validators=[Required()])
+	register = SubmitField('Register')
