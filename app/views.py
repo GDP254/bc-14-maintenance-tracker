@@ -2,8 +2,9 @@
 
 from flask import render_template, session, redirect, url_for
 
-from app import app#
+from app import app, db
 from forms import SigninForm, RegisterForm, RegisterFacilityForm
+from models import User, Facility
 
 @app.route('/')
 def index():
@@ -21,8 +22,12 @@ def signin():
 def register_user():
 	form = RegisterForm()
 	if form.validate_on_submit():
-		session['name'] = form.email.data
-		return redirect(url_for('index'))
+		user = User(fname = form.fname.data,
+					lname = form.lname.data,
+					email = form.email.data,
+					password = form.password.data)
+		db.session.add(user)
+		return redirect(url_for('signin'))
 	return render_template("register.html", form=form)
 
 @app.route('/facility/register', methods=['GET', 'POST'])
