@@ -39,7 +39,7 @@ class User(UserMixin, db.Model):
 	"""
 
 	def __repr__(self):
-		return '<User %r>' % self.name
+		return '<User %r>' % self.fname
 
 @login_manager.user_loader
 def load_user(user_id):

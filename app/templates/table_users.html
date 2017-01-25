@@ -1,0 +1,33 @@
+{% extends "table_base.html" %}
+
+{% block table_caption %}
+<h1>Users</h1>
+{% endblock %}
+
+{% block table_head %}
+<tr>
+    <th>Names</th>
+    <th>Email</th>
+    <th>Confrimed</th>
+    <th>Role</th>
+    <th></th>
+</tr>
+{% endblock %}
+
+{% block table_body %}
+{% for user in data %}
+<tr>
+    <td>
+    	<a href="{{ url_for('manage_user', userid=user.id) }}">
+    	{{ user.lname }} {{ user.fname }}
+    	</a>
+    </td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.confirmed }}</td>
+    <td>{{ user.role }}</td>
+    <td>
+    	<a href="{{ url_for('manage_user', userid=user.id) }}" class="btn btn-default">View</a>
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}
