@@ -1,11 +1,7 @@
-{% extends "bootstrap/base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% extends "external_base.html" %}
 
-{% block content %}
-<!-- Login, Register tabbed interface from http://bootsnipp.com/snippets/featured/login-and-register-tabbed-form -->
-<div class="container">
-    <div class="row">
-		<div class="col-md-6 col-md-offset-3">
+{% block page_content %}
+
 			<div class="row">
 				<div class="col-lg-12 page-header">
 					<h2>Sign In</h2>
@@ -17,16 +13,18 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="text-center">
+								<a href="{{ url_for('register_user') }}" tabindex="5" class="forgot-password">Registration</a>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="text-center">
 								<a href="" tabindex="5" class="forgot-password">Forgot Password?</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
-
-
 
 {% endblock %}
