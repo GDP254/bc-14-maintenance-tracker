@@ -7,7 +7,8 @@ class Facility(db.Model):
 	__tablename__ = 'facilities'
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(64), unique=True)
-	status = db.Column(db.String(6), unique=False)
+	status = db.Column(db.String(64), unique=False)
+	requests = db.relationship('Request', backref='facility', lazy='dynamic')
 
 	def __repr__(self):
 		return '<Facility %r>' % self.name
@@ -40,6 +41,28 @@ class User(UserMixin, db.Model):
 
 	def __repr__(self):
 		return '<User %r>' % self.fname
+
+class Request(db.Model):
+	__tablename__ = 'request'
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(64), unique=False)
+	photo = db.Column(db.String(64), unique=False)
+	notes = db.Column(db.String(200), unique=False)
+	status = db.Column(db.String(64), unique=False)
+	facility_id = db.Column(db.Integer, db.ForeignKey('facilities.id'))
+	admin_comment = db.Column(db.String(200), unique=False)
+	assignee_name = db.Column(db.String(64), unique=False)
+	assignee_number = db.Column(db.String(64), unique=False)
+	assignment_date = db.Column(db.String(64), unique=False)
+	assignment_time = db.Column(db.String(64), unique=False)
+
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+	admin_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+	user_requests = db.relationship('User', foreign_keys=[user_id], backref='user')
+	admin_requests = db.relationship('User', foreign_keys=[admin_id], backref='admin')
+
+	def __repr__(self):
+		return '<Request %r>' % self.name
 
 @login_manager.user_loader
 def load_user(user_id):

@@ -1,7 +1,7 @@
 from flask_wtf import Form
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, SelectField, ValidationError
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, SelectField, TextAreaField, FileField, ValidationError
 from wtforms.validators import Required, length, Email, EqualTo
-from models import User
+from models import User, Facility
 from flask_login import current_user
 
 class SigninForm(Form):
@@ -37,4 +37,11 @@ class UserForm(Form):
 class RegisterFacilityForm(Form):
 	name = StringField('Name:', validators=[Required()])
 	status = SelectField('Status:', choices=[('inactive', 'Inactive'), ('active', 'Active')], validators=[Required()])
+	register = SubmitField('Register')
+
+class RegisterRequestForm(Form):
+	name = StringField('Name:', validators=[Required()])
+	notes = TextAreaField('Notes:', validators=[Required()])
+	facility = SelectField('Status:', choices=[(f.id, f.name) for f in Facility.query.order_by('name')], validators=[Required()])
+	photo = FileField(u'Image:')
 	register = SubmitField('Register')

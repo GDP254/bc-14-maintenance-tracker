@@ -1,0 +1,32 @@
+{% extends "table_base.html" %}
+
+{% block page_header %}
+<h1>Facilities</h1>
+{% endblock %}
+
+{% block table_caption %}
+{% endblock %}
+
+{% block table_head %}
+<tr>
+    <th>Names</th>
+    <th>Status</th>
+    <th></th>
+</tr>
+{% endblock %}
+
+{% block table_body %}
+{% for facility in data %}
+<tr>
+    <td>
+    	<a href="{{ url_for('manage_facility', facilityid=facility.id) }}">
+    	{{ facility.name }}
+    	</a>
+    </td>
+    <td>{{ facility.status }}</td>
+    <td>
+    	<a href="{{ url_for('manage_facility', facilityid=facility.id) }}" class="btn btn-default">View</a>
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}

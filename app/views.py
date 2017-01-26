@@ -3,7 +3,7 @@
 from flask import flash, render_template, session, redirect, url_for, request, abort
 
 from app import app, db
-from forms import SigninForm, RegisterForm, RegisterFacilityForm, UserForm
+from forms import SigninForm, RegisterForm, RegisterFacilityForm, UserForm, RegisterRequestForm
 from models import User, Facility
 from flask_login import login_user, logout_user, login_required, current_user
 from sms import send_sms
@@ -78,9 +78,44 @@ def manage_user(userid):
 def register_facility():
 	form = RegisterFacilityForm()
 	if form.validate_on_submit():
-		#Model mainipulation
-		pass
+		facility = Facility(name = form.name.data, status = form.status.data)
+		db.session.add(facility)
+		flash("You have created a facility")
 		return redirect(url_for('index'))
 	#Request facility details and set envroment variables
 	return render_template("facility_register.html", form=form)
+
+@app.route('/facilities/view')
+@login_required
+def view_facilities():
+	facilities = Facility.query.all()
+	return render_template("table_facilities.html", data=facilities)
+
+@app.route('/facility/<facilityid>/manage', methods=['GET', 'POST'])
+@login_required
+def manage_facility(facilityid):
+	facility = Facility.query.filter(Facility.id == facilityid).first()
+	if facility is None:
+		abort(404)
+	form = RegisterFacilityForm()
+	if form.validate_on_submit():
+		facility.name = form.name.data
+		facility.status = form.status.data
+		db.session.add(facility)
+		flash("You have updated a facility")
+		return redirect(url_for('view_facilities'))
+	form.name.data = facility.name
+	form.status.data = facility.status
+	#Request facility details and set envroment variables
+	return render_template("facility_register.html", form=form)
+
+@app.route('/request/register', methods=['GET', 'POST'])
+@login_required
+def register_request():
+	form = RegisterRequestForm()
+	if form.validate_on_submit():
+		pass
+		return redirect(url_for('index'))
+	#Request facility details and set envroment variables
+	return render_template("request_register.html", form=form, title="Register Requests")
 
