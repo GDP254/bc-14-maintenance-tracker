@@ -1,0 +1,33 @@
+{% extends "table_base.html" %}
+
+{% block page_header %}
+<h1>Requests</h1>
+{% endblock %}
+
+{% block table_caption %}
+{% endblock %}
+
+{% block table_head %}
+<tr>
+    <th>Names</th>
+    <th>Status</th>
+    <th>User</th>
+</tr>
+{% endblock %}
+
+{% block table_body %}
+{% for request in data %}
+<tr>
+    <td>
+    	<a href="{{ url_for('process_request', requestid=request.id) }}">
+    	{{ request.name }}
+    	</a>
+    </td>
+    <td>{{ request.status }}</td>
+    <td>{{ request.user.lname }}</td>
+    <td>
+    	<a href="{{ url_for('process_request', requestid=request.id) }}" class="btn btn-default">Process</a>
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}

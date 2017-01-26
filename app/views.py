@@ -3,8 +3,8 @@
 from flask import flash, render_template, session, redirect, url_for, request, abort
 
 from app import app, db
-from forms import SigninForm, RegisterForm, RegisterFacilityForm, UserForm, RegisterRequestForm
-from models import User, Facility
+from forms import SigninForm, RegisterForm, RegisterFacilityForm, UserForm, RegisterRequestForm, ProcessRequestForm
+from models import User, Facility, Request
 from flask_login import login_user, logout_user, login_required, current_user
 from sms import send_sms
 
@@ -115,8 +115,47 @@ def manage_facility(facilityid):
 def register_request():
 	form = RegisterRequestForm()
 	if form.validate_on_submit():
-		pass
+		req = Request(name=form.name.data,
+			notes=form.notes.data,
+			facility_id=form.facility.data,
+			#photo=form.photo.data,
+			user_id=current_user.id)
+		db.session.add(req)
 		return redirect(url_for('index'))
 	#Request facility details and set envroment variables
 	return render_template("request_register.html", form=form, title="Register Requests")
+
+@app.route('/requests/view')
+@login_required
+def view_requests():
+	requests = Request.query.all()
+	return render_template("table_requests.html", data=requests)
+
+@app.route('/request/<requestid>/process', methods=['GET', 'POST'])
+@login_required
+def process_request(requestid):
+	req = Request.query.filter(Request.id == requestid).first()
+	if req is None:
+		abort(404)
+	form = ProcessRequestForm()
+	if form.validate_on_submit():
+		req.status = form.status.data
+		req.admin_comment = form.comments.data
+		req.assignee_name = form.contact_name.data
+		req.assignee_number = form.contact_phone.data
+		req.admin_id = current_user.id
+		db.session.add(req)
+		if req.status == 'approved':
+			send_sms(req.assignee_number, 'req: '+str(req.id)+' at'+req.facility.name)
+		else:
+			#notify user
+			pass
+		flash('Request processed')
+		return redirect(url_for('view_requests'))
+	form.status.data = req.status
+	form.comments.data = req.admin_comment
+	form.contact_name.data = req.assignee_name
+	form.contact_phone.data = req.assignee_number
+	#Request facility details and set envroment variables
+	return render_template("request_register.html", form=form, title="Process Requests")
 

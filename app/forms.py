@@ -42,6 +42,13 @@ class RegisterFacilityForm(Form):
 class RegisterRequestForm(Form):
 	name = StringField('Name:', validators=[Required()])
 	notes = TextAreaField('Notes:', validators=[Required()])
-	facility = SelectField('Status:', choices=[(f.id, f.name) for f in Facility.query.order_by('name')], validators=[Required()])
+	facility = SelectField('Facility:', coerce=int, choices=[(f.id, f.name) for f in Facility.query.order_by('name')], validators=[Required()])
 	photo = FileField(u'Image:')
 	register = SubmitField('Register')
+
+class ProcessRequestForm(Form):
+	status = SelectField('Status:', choices=[('default', 'Default'), ('approved', 'Approved'), ('disapproved', 'Disapproved'), ('closed', 'Closed')], validators=[Required()])
+	comments = TextAreaField('Comments:', validators=[Required()])
+	contact_name = StringField('Contact Name:', validators=[Required()])
+	contact_phone = StringField('Contact phone:', validators=[Required()])
+	submit = SubmitField('Submit')
