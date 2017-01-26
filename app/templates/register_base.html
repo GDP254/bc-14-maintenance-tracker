@@ -1,21 +1,22 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block content %}
+{% block page_header %}
+{% endblock %}
+
+{% block page_content %}
 <!-- Login, Register tabbed interface from http://bootsnipp.com/snippets/featured/login-and-register-tabbed-form -->
 <div class="container">
    	<div class="row">
 		<div class="col-md-6 col-md-offset-3">
 			<div class="row">
 				<div class="col-lg-12 page-header">
-					{% block page_header %}
-					<h2>Register Facility</h2>
-					{% endblock %}
+					<h2>{{ heading }}</h2>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
-					{% block page_content %}
+					{% block form_content %}
 					{{ wtf.quick_form(form) }}
 					{% endblock %}
 				</div>

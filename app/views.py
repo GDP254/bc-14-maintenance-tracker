@@ -45,7 +45,7 @@ def register_user():
 		db.session.add(user)
 		flash('You may now Sign In')
 		return redirect(url_for('signin'))
-	return render_template("register.html", form=form, title="Register")
+	return render_template("register.html", form=form, heading="Registration")
 
 @app.route('/users/view')
 @login_required
@@ -72,7 +72,7 @@ def manage_user(userid):
 	form.lname.data = usr.lname
 	form.confirmed.data = usr.confirmed
 	form.role.data = usr.role
-	return render_template("register.html", form=form, title="User Information")
+	return render_template("register_base.html", form=form, heading="User Information")
 
 @app.route('/facility/register', methods=['GET', 'POST'])
 @login_required
@@ -84,7 +84,7 @@ def register_facility():
 		flash("You have created a facility")
 		return redirect(url_for('index'))
 	#Request facility details and set envroment variables
-	return render_template("facility_register.html", form=form)
+	return render_template("register_base.html", form=form, heading="Facility Information")
 
 @app.route('/facilities/view')
 @login_required
@@ -108,7 +108,7 @@ def manage_facility(facilityid):
 	form.name.data = facility.name
 	form.status.data = facility.status
 	#Request facility details and set envroment variables
-	return render_template("facility_register.html", form=form)
+	return render_template("register_base.html", form=form, heading="Facility Information")
 
 @app.route('/request/register', methods=['GET', 'POST'])
 @login_required
@@ -123,7 +123,7 @@ def register_request():
 		db.session.add(req)
 		return redirect(url_for('index'))
 	#Request facility details and set envroment variables
-	return render_template("request_register.html", form=form, title="Register Requests")
+	return render_template("register_base.html", form=form, heading="Register Requests")
 
 @app.route('/requests/view')
 @login_required
@@ -157,5 +157,5 @@ def process_request(requestid):
 	form.contact_name.data = req.assignee_name
 	form.contact_phone.data = req.assignee_number
 	#Request facility details and set envroment variables
-	return render_template("request_register.html", form=form, title="Process Requests")
+	return render_template("register_base.html", form=form, heading="Process Requests")
 
