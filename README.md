@@ -1,4 +1,4 @@
-# bc-14-maintenance-tracker
+# [MT] Maintenance Tracker
 
 Deployment: http://b9598c20.ngrok.io/
 
@@ -10,7 +10,7 @@ Deployment: http://b9598c20.ngrok.io/
 
 		Process Request
 
-			Notify contact
+			Notify contact [SMS]
 
 	Access
 
@@ -19,6 +19,7 @@ Deployment: http://b9598c20.ngrok.io/
 		Sign in
 
 **Maintenance Tracker**
+
 A system to allow reporting of maintenance and repairs request, to track the maintenance process and escalate unusual delays.
 
 The admin for this app will be the person in charge of Facilities
