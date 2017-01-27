@@ -3,12 +3,19 @@
 Deployment: http://b9598c20.ngrok.io/
 
 **Delivered Functionality**
+
 	Request Management
+
 		Create Request
+
 		Process Request
+
 			Notify contact
+
 	Access
+
 		Registration
+
 		Sign in
 
 **Maintenance Tracker**
