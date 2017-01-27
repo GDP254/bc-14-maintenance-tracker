@@ -12,6 +12,12 @@ Deployment: http://b9598c20.ngrok.io/
 
 			Notify contact [SMS]
 
+	Facility Management
+
+		Create Facility
+
+		Edit Facility
+
 	Access
 
 		Registration
