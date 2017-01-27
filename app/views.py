@@ -146,7 +146,7 @@ def process_request(requestid):
 		req.admin_id = current_user.id
 		db.session.add(req)
 		if req.status == 'approved':
-			send_sms(req.assignee_number, 'req: '+str(req.id)+' at'+req.facility.name)
+			send_sms(req.assignee_number, '#: '+str(req.id)+' at'+req.facility.name)
 		else:
 			#notify user
 			pass
