@@ -1,22 +1,22 @@
 # config.py
+import os
 
 # Enable Flask's debugging features. Should be False in production
-DEBUG = True
-SECRET_KEY = 'hard to guess string'
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:simple101@localhost:5433/maintenance'
-SQLALCHEMY_COMMIT_ON_TEARDOWN = True
-SQLALCHEMY_TRACK_MODIFICATIONS = False
+DEBUG = os.environ.get('DEBUG')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
+SQLALCHEMY_COMMIT_ON_TEARDOWN = os.environ.get('SQLALCHEMY_COMMIT_ON_TEARDOWN')
+SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get('SQLALCHEMY_TRACK_MODIFICATIONS')
 
-MAIL_SERVER='smtp.gmail.com'
-MAIL_PORT = 465
-MAIL_USERNAME = 'stvnkrs1@gmail.com'
-MAIL_PASSWORD = 'ta1fac00l'
-MAIL_USE_TLS = False
-MAIL_USE_SSL = True
+MAIL_SERVER=os.environ.get('MAIL_SERVER')
+MAIL_PORT =os.environ.get('MAIL_PORT')
+MAIL_USERNAME =os.environ.get('MAIL_USERNAME')
+MAIL_PASSWORD =os.environ.get('MAIL_PASSWORD')
+MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS')
+MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL')
 
-AT_USERNAME = 'stvnkrs'
-AT_APIKEY = 'ecd8b59d5a637d8b473b8f121744acbc993300ab5543ac0a1a044de1191d728a'
-PHONE_NUMBER = '+15005550006' #'+17606844938'
+AT_USERNAME = os.environ.get('AT_USERNAME')
+AT_APIKEY = os.environ.get('AT_APIKEY')
 
 
 
